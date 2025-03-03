@@ -32,9 +32,9 @@ module homework1 =
     let findFirst list element= 
         let rec findFirst list element acc= 
             match list with
-            | head :: _ when head = element -> Ok acc
+            | head :: _ when head = element -> Some acc
             | _ :: tail -> findFirst tail element (acc + 1)
-            | [] -> Error "Not found"
+            | [] -> None
         findFirst list element 0
     
     /// Returns a list that contains m + 1 powers of 2 starting with n-th power; [2^n, 2^(n + 1), ..., 2^(n + m)]
@@ -42,5 +42,5 @@ module homework1 =
         let rec powerList n m acc = 
             match m with
             | 0 -> acc
-            | _ -> powerList n (m - 1) (acc.Head / 2 :: acc) 
-        powerList n m [1 <<< n + m]
+            | _ -> powerList n (m - 1) (acc.Head * 2 :: acc) 
+        listReverse (powerList n m [1 <<< n])
