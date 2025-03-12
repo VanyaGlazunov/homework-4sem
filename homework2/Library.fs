@@ -52,12 +52,13 @@ module Homework2 =
             | DIV(l, r) ->
                 eval l (fun evalL -> eval r (fun evalR ->
                         match evalR with
-                        | f when f < eps -> failwith "Division by zero"
+                        | f when f < eps -> raise (System.DivideByZeroException ())
                         | _ -> cont (evalL / evalR)
                     )
                 )
         eval expression id
     
+    /// Generates an infinite sequence of consecutive prime numbers
     let primes = 
         let isPrime n = 
             let rec check i =

@@ -74,9 +74,9 @@ let ``eval should handle division by zero`` () =
     let divByZero n = 
         let expr = DIV(CONST n, CONST (eps / 2.))
         eval expr
-    (fun () -> divByZero 0.0 |> ignore) |> should throw typeof<System.Exception>
-    (fun () -> divByZero 1.0 |> ignore) |> should throw typeof<System.Exception>
-    (fun () -> divByZero -1.0 |> ignore) |> should throw typeof<System.Exception>
+    (fun () -> divByZero 0.0 |> ignore) |> should throw typeof<System.DivideByZeroException>
+    (fun () -> divByZero 1.0 |> ignore) |> should throw typeof<System.DivideByZeroException>
+    (fun () -> divByZero -1.0 |> ignore) |> should throw typeof<System.DivideByZeroException>
 
 [<Test>]
 let ``primes should start with the first ten prime numbers`` () =
