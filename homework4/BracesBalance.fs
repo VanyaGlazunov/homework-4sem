@@ -1,7 +1,6 @@
 namespace homework4
 
 module BracesBalance = 
-    [<TailCallAttribute>]
     let checkBalance input = 
         let mapBrace closing = 
             match closing with
