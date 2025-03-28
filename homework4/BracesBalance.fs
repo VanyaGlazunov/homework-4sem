@@ -1,6 +1,7 @@
 namespace homework4
 
 module BracesBalance = 
+    /// Checks whether braces in the input string are balanced
     let checkBalance input = 
         let mapBrace closing = 
             match closing with
