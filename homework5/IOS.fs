@@ -1,5 +1,6 @@
 namespace homework5
 
+/// Interface that represents OS of a computer in a local network
 type IOS =
     abstract member Name : string
     abstract member InfectionChance : float
