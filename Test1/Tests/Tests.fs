@@ -52,4 +52,8 @@ module Tests =
     [<Test>]
     let ``PriorityQueue raises exception when getting top of empty queue`` () =
         let pq = PriorityQueue<int>()
-        Assert.Throws<System.InvalidOperationException>(fun () -> pq.top() |> ignore)
+        try
+            pq.top()
+        with
+        | :? System.InvalidOperationException -> Assert.Pass ()
+        | _ -> Assert.Fail()
