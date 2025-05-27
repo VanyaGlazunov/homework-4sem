@@ -29,40 +29,41 @@ module Homework2 =
 
     /// Arithmetic expression type
     type Expression = 
-        | CONST of float
-        | PLUS of Expression * Expression
-        | MINUS of Expression * Expression
-        | MUL of Expression * Expression
-        | DIV of Expression * Expression
-        | UMINUS of Expression
+        | Const of float
+        | Plus of Expression * Expression
+        | Minus of Expression * Expression
+        | Mul of Expression * Expression
+        | Div of Expression * Expression
+        | UMinus of Expression
     
-    /// Evaluates given arithmetic expression. Throws Exception if division by zero ouccurs.
+    /// Evaluates given arithmetic expression. Returns None if division by zero ouccurs.
     let eval expression = 
         let eps = 1e-10
         let rec eval expr cont = 
             match expr with
-            | CONST c -> cont c
-            | UMINUS e -> -1. * eval e cont
-            | PLUS(l, r) ->
+            | Const c -> cont c
+            | UMinus e -> eval e (fun subVal -> cont (-1. * subVal))
+            | Plus(l, r) ->
                 eval l (fun evalL -> eval r (fun evalR -> cont (evalL + evalR)))
-            | MINUS(l, r) ->
+            | Minus(l, r) ->
                 eval l (fun evalL -> eval r (fun evalR -> cont (evalL - evalR)))
-            | MUL(l, r) ->
+            | Mul(l, r) ->
                 eval l (fun evalL -> eval r (fun evalR -> cont (evalL * evalR)))
-            | DIV(l, r) ->
+            | Div(l, r) ->
                 eval l (fun evalL -> eval r (fun evalR ->
-                        match evalR with
-                        | f when f < eps -> raise (System.DivideByZeroException ())
-                        | _ -> cont (evalL / evalR)
+                        if abs evalR < eps then
+                            None
+                        else
+                            cont (evalL / evalR)
                     )
                 )
-        eval expression id
+        eval expression (fun result -> Some result)
     
     /// Generates an infinite sequence of consecutive prime numbers
     let primes = 
         let isPrime n = 
             let rec check i =
-                i > n / 2 || n % i <> 0 && check (i + 1)
+                i * i > n || n % i <> 0 && check (i + 1)
             check 2
         
         let numbers = Seq.initInfinite ((+) 2)

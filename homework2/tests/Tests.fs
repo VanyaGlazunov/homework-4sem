@@ -23,9 +23,9 @@ let ``countWithMap should return 0 for empty list`` () =
 
 [<Test>]
 let ``map should apply function to all nodes`` () =
-    let tree =Node(1,Node(2,Empty,Empty),Node(3,Empty,Empty))
+    let tree =Node(1, Node(2, Empty, Empty), Node(3, Empty, Empty))
     let mappedTree = map ((+) 1) tree
-    mappedTree |> should equal (Node(2,Node(3,Empty,Empty),Node(4,Empty,Empty)))
+    mappedTree |> should equal (Node(2, Node(3, Empty, Empty), Node(4, Empty, Empty)))
 
 [<Test>]
 let ``map should return Empty for an empty tree`` () =
@@ -34,49 +34,49 @@ let ``map should return Empty for an empty tree`` () =
     mappedTree |> should equal BinTree<int>.Empty
 
 [<Test>]
-let ``eval should evaluate CONST correctly`` () =
-    let expr = CONST 5.0
-    eval expr |> should equal 5.0
+let ``eval should evaluate Const correctly`` () =
+    let expr = Const 5.0
+    eval expr |> should equal (Some 5.0)
 
 [<Test>]
-let ``eval should evaluate PLUS correctly`` () =
-    let expr = PLUS(CONST 2.0, CONST 3.0)
-    eval expr |> should equal 5.0
+let ``eval should evaluate Plus correctly`` () =
+    let expr = Plus(Const 2.0, Const 3.0)
+    eval expr |> should equal (Some 5.0)
 
 [<Test>]
-let ``eval should evaluate MINUS correctly`` () =
-    let expr = MINUS(CONST 5.0, CONST 3.0)
-    eval expr |> should equal 2.0
+let ``eval should evaluate Minus correctly`` () =
+    let expr = Minus(Const 5.0, Const 3.0)
+    eval expr |> should equal (Some 2.0)
 
 [<Test>]
-let ``eval should evaluate MUL correctly`` () =
-    let expr = MUL(CONST 2.0, CONST 3.0)
-    eval expr |> should equal 6.0
+let ``eval should evaluate Mul correctly`` () =
+    let expr = Mul(Const 2.0, Const 3.0)
+    eval expr |> should equal (Some 6.0)
 
 [<Test>]
-let ``eval should evaluate DIV correctly`` () =
-    let expr = DIV(CONST 6.0, CONST 3.0)
-    eval expr |> should equal 2.0
+let ``eval should evaluate Div correctly`` () =
+    let expr = Div(Const 6.0, Const 3.0)
+    eval expr |> should equal (Some 2.0)
 
 [<Test>]
-let ``eval should evaluate UMINUS correctly`` () =
-    let expr = UMINUS(CONST 5.0)
-    eval expr |> should equal -5.0
+let ``eval should evaluate UMinus correctly`` () =
+    let expr = UMinus(Const 5.0)
+    eval expr |> should equal (Some -5.0)
 
 [<Test>]
 let ``eval should handle nested expressions correctly`` () =
-    let expr = PLUS(MUL(CONST 2.0, CONST 3.0), MINUS(CONST 5.0, CONST 1.0))
-    eval expr |> should equal 10.0
+    let expr = Plus(Mul(Const 2.0, Const 3.0), Minus(Const 5.0, Const 1.0))
+    eval expr |> should equal (Some 10.0)
 
 [<Test>]
 let ``eval should handle division by zero`` () = 
     let eps = 1e-10
     let divByZero n = 
-        let expr = DIV(CONST n, CONST (eps / 2.))
+        let expr = Div(Const n, Const (eps / 2.))
         eval expr
-    (fun () -> divByZero 0.0 |> ignore) |> should throw typeof<System.DivideByZeroException>
-    (fun () -> divByZero 1.0 |> ignore) |> should throw typeof<System.DivideByZeroException>
-    (fun () -> divByZero -1.0 |> ignore) |> should throw typeof<System.DivideByZeroException>
+    divByZero 0.0 |> should equal None
+    divByZero 1.0 |> should equal None
+    divByZero -1.0 |> should equal None
 
 [<Test>]
 let ``primes should start with the first ten prime numbers`` () =
