@@ -1,0 +1,24 @@
+\documentclass{article}
+\usepackage{mathtext} 				
+\usepackage[T2A]{fontenc}			
+\usepackage[utf8]{inputenc}			
+\usepackage[english,russian]{babel}
+\usepackage{indentfirst}
+
+
+\title{SKK}
+
+\begin{document}
+
+\maketitle
+
+\[I = \lambda x.x\]
+\[S = \lambda xyz.x z (y z)\]
+\[K = \lambda x y. x\]
+
+\[S K K = (\lambda xyz.x z (y z)) K K \rightarrow_\beta\]
+\[(\lambda yz.K z (y z))K \rightarrow_\beta\]
+\[\lambda z.K z (K z) \rightarrow_\beta\]
+\[\lambda z. (\lambda y.z)(K z) \rightarrow_\beta\]
+\[\lambda z.z = I\]
+\end{document}

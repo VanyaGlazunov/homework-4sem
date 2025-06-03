@@ -1,0 +1,31 @@
+\documentclass{article}
+\usepackage{mathtext} 				
+\usepackage[T2A]{fontenc}			
+\usepackage[utf8]{inputenc}			
+\usepackage[english,russian]{babel}
+\usepackage{indentfirst}
+
+
+\title{lambda}
+
+\begin{document}
+
+\maketitle
+
+\[
+((\lambda a.(\lambda b.b b) (\lambda b.b b)) b) ((\lambda c.(c b)) (\lambda a.a)) \rightarrow_\beta
+\]
+
+\[
+((\lambda b.b b)(\lambda b.b b))((\lambda c.(cb))(\lambda a.a)) 
+\rightarrow_\beta
+\]
+
+\[
+((\lambda b.bb)(\lambda b.bb))((\lambda c.(cb))(\lambda a.a))
+\rightarrow_\beta ...
+\]
+
+Выражение $((\lambda b.bb)(\lambda b.bb))$ является самым левым внешним редексом, при этом оно расходится, поэтому все выражение не имеет нормальной формы.
+
+\end{document}
