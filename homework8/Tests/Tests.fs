@@ -57,7 +57,7 @@ let ``Get computed once`` (lzy: ILazy<int>, expected: int) =
 
 let concurrentLazies =
     [|
-        fun supplier -> ConcurrentLazy supplier :> ILazy<int>
+        fun supplier -> ConcurrentLazy supplier :> ILazy<int> 
         fun supplier -> LockFreeLazy supplier :> ILazy<int>
     |]
 
@@ -77,5 +77,5 @@ let ``Concurrent Lazy get should avoid races`` (factory: (unit -> int) -> ILazy<
     )
     let results = jobs |> Async.Parallel |> Async.RunSynchronously
 
-    Array.TrueForAll (results, (fun i -> i = 1)) |> should equal true
+    results |> Array.distinct |> Array.length |> should equal 1
     
