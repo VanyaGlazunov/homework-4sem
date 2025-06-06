@@ -1,5 +1,6 @@
 namespace Lazy
 
+/// Simple implementaion of lazy, not thread safe.
 type SimpleLazy<'a>(supplier: unit -> 'a) =
     let mutable result: Result<'a, exn> option = None
     interface ILazy<'a> with

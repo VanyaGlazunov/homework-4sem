@@ -1,5 +1,6 @@
 namespace Lazy
 
+/// Thread safe implementation of Lazy.
 type ConcurrentLazy<'a>(supplier: unit -> 'a) = 
     let mutable result: Result<'a, exn> option = None
     let lockObj = obj()

@@ -2,6 +2,7 @@ namespace Lazy
 
 open System.Threading
 
+/// Lock free implementation of Lazy, gurantees that every call to Get returns the same result.
 type LockFreeLazy<'a>(supplier: unit -> 'a) = 
     [<VolatileField>]
     let mutable state: Result<'a, exn> option = None
